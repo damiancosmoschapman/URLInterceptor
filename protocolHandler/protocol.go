@@ -27,7 +27,7 @@ import (
 
 // VirusTotal API configuration
 const (
-	vtAPIKey = "2bcd320953ad2e603d9b1b47fae0189f80b3c43ea9758c5e4a87a2933c42dc03"
+	vtAPIKey = ""
 	vtAPIURL = "https://www.virustotal.com/api/v3/urls"
 
 	// Toggle this to disable VirusTotal checks during testing

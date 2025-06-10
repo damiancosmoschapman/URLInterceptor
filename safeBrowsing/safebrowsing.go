@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	apiKey  = "AIzaSyBzPcqIdd1gNOd6zdJr7Hcfz0PBlIEi0-k" // <-- Replace this
+	apiKey  = ""
 	baseURL = "https://webrisk.googleapis.com/v1/uris:search"
 )
 
