@@ -1,3 +1,4 @@
 # Private keys
 *.key
 *.crt
+/protocolHandler/go_build_protocol_go

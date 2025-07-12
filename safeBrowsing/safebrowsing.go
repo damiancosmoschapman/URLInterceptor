@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -25,7 +26,7 @@ func checkURLV5(urlToCheck string) (bool, error) {
 	apiKey := os.Getenv("GOOGLE_API_KEY")
 	if apiKey == "" {
 		fmt.Println("GOOGLE_API_KEY is not set")
-		return
+		return false, errors.New("GOOGLE_API_KEY is not set")
 	}
 	// Build the URL with query parameters
 	params := url.Values{}
