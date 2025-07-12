@@ -10,7 +10,6 @@ import (
 )
 
 const (
-	apiKey  = ""
 	baseURL = "https://webrisk.googleapis.com/v1/uris:search"
 )
 
@@ -23,6 +22,11 @@ type APIResponse struct {
 }
 
 func checkURLV5(urlToCheck string) (bool, error) {
+	apiKey := os.Getenv("GOOGLE_API_KEY")
+	if apiKey == "" {
+		fmt.Println("GOOGLE_API_KEY is not set")
+		return
+	}
 	// Build the URL with query parameters
 	params := url.Values{}
 	params.Add("uri", urlToCheck)

@@ -27,7 +27,6 @@ import (
 
 // VirusTotal API configuration
 const (
-	vtAPIKey = ""
 	vtAPIURL = "https://www.virustotal.com/api/v3/urls"
 
 	// Toggle this to disable VirusTotal checks during testing
@@ -650,6 +649,12 @@ func isTrustedDomain(host string) bool {
 
 // Check URL safety with VirusTotal
 func checkURLSafety(targetURL string) (bool, string) {
+	apiKey := os.Getenv("VIRUSTOTAL_API_KEY")
+	if apiKey == "" {
+		fmt.Println("VIRUSTOTAL_API_KEY is not set")
+		return false, "VIRUSTOTAL_API_KEY is not set"
+	}
+
 	// Validate URL first
 	u, err := url.Parse(targetURL)
 	if err != nil {
@@ -676,7 +681,7 @@ func checkURLSafety(targetURL string) (bool, string) {
 	log.Printf("Checking URL with VirusTotal: %s", targetURL)
 
 	// Submit URL to VirusTotal
-	scanID, err := virusTotal.SubmitURLForScanning(vtAPIKey, targetURL)
+	scanID, err := virusTotal.SubmitURLForScanning(apiKey, targetURL)
 	if err != nil {
 		log.Printf("Error submitting URL to VirusTotal: %v", err)
 		// Don't block on VirusTotal errors
@@ -687,7 +692,7 @@ func checkURLSafety(targetURL string) (bool, string) {
 	time.Sleep(2 * time.Second)
 
 	// Get results
-	report, err := virusTotal.GetScanReport(vtAPIKey, scanID)
+	report, err := virusTotal.GetScanReport(apiKey, scanID)
 	if err != nil {
 		log.Printf("Error getting scan report: %v", err)
 		return true, fmt.Sprintf("VirusTotal report retrieval failed: %v", err)
@@ -947,7 +952,7 @@ func printInstructions() {
 	//log.Println("")
 	//if enableVirusTotalChecks {
 	//	log.Println("VirusTotal integration: ENABLED")
-	//	if vtAPIKey == "YOUR_VIRUSTOTAL_API_KEY" {
+	//	if apiKey == "YOUR_VIRUSTOTAL_API_KEY" {
 	//		log.Println("WARNING: Please set your VirusTotal API key!")
 	//	}
 	//} else {
@@ -955,6 +960,6 @@ func printInstructions() {
 	//}
 	//log.Println("")
 	//log.Println("The proxy will now intercept HTTPS traffic including Gmail redirects!")
-	log.Println("Press Ctrl+C to stop")
+	log.Println("Press Stop to stop")
 	log.Println("=================================================")
 }
